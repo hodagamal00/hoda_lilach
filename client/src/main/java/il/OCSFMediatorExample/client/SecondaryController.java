@@ -70,12 +70,18 @@ public class SecondaryController {
         try {
             double newPrice = Double.parseDouble(newPriceField.getText());
             String msg = "#updatePrice " + currentItem.getId() + " " + newPrice;
-            System.out.println("Sending message to server: " + msg); // 🧪 בדיקת הדפסה
+            System.out.println("Sending message to server: " + msg);
             SimpleClient.getClient().sendToServerSafe(msg);
+
+            // ✅ עדכון התצוגה מיידית
+            currentItem.setPrice(newPrice); // נעדכן את האובייקט המקומי
+            itemPriceLabel.setText(String.format("Price: %.2f₪", newPrice)); // נעדכן את ה־Label
+
         } catch (NumberFormatException e) {
             System.err.println("Invalid price entered");
         }
     }
+
 
 
 }
