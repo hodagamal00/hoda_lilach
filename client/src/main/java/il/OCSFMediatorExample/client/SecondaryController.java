@@ -1,5 +1,6 @@
 package il.OCSFMediatorExample.client;
 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +9,8 @@ import javafx.scene.image.Image;      // *** וודאי שורה זו קיימת
 import javafx.scene.image.ImageView;   // *** וודאי שורה זו קיימת! ***
 import javafx.stage.Stage;
 import il.OCSFMediatorExample.entities.Item;
+import javafx.scene.control.TextField;
+
 
 import java.io.InputStream;
 
@@ -20,6 +23,9 @@ public class SecondaryController {
     @FXML private Label itemPriceLabel;
     @FXML private Label itemDescriptionLabel;
     @FXML private Button backButton;
+    @FXML private TextField newPriceField;
+    @FXML private Button updatePriceButton;
+
 
     private Item currentItem;
 
@@ -59,4 +65,17 @@ public class SecondaryController {
         Stage stage = (Stage) backButton.getScene().getWindow();
         stage.close();
     }
+    @FXML
+    public void handleUpdatePriceAction() {
+        try {
+            double newPrice = Double.parseDouble(newPriceField.getText());
+            String msg = "#updatePrice " + currentItem.getId() + " " + newPrice;
+            System.out.println("Sending message to server: " + msg); // 🧪 בדיקת הדפסה
+            SimpleClient.getClient().sendToServerSafe(msg);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid price entered");
+        }
+    }
+
+
 }
