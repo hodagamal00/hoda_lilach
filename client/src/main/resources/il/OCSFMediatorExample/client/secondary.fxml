@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="il.OCSFMediatorExample.client.SecondaryController"
+      alignment="TOP_LEFT" spacing="10.0" prefWidth="400.0">
+    <padding><Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/></padding>
+
+    <Label text="Item Details"><font><Font name="System Bold" size="18.0"/></font></Label>
+
+    <ImageView fx:id="itemDetailImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"/>
+    <Label fx:id="itemNameLabel" text="Name:"/>
+    <Label fx:id="itemIdLabel" text="ID:"/>
+    <Label fx:id="itemTypeLabel" text="Category:"/>
+    <Label fx:id="itemPriceLabel" text="Price:"/>
+    <Label fx:id="itemDescriptionLabel" text="Description:"/>
+
+    <Button fx:id="backButton" onAction="#handleBackButtonAction" text="Back to Catalog">
+        <VBox.margin><Insets top="20.0"/></VBox.margin>
+    </Button>
+</VBox>
