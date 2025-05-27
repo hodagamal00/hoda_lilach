@@ -50,24 +50,24 @@ public class PrimaryController {
 
 					// טעינת התמונה של הפריט - גרסה מעודכנת עם הדפסות DEBUG
 					String imagePath = "/il/OCSFMediatorExample/client/Items_images/" + item.getImageUrl();
-					System.out.println("🔍 Trying to load image: " + imagePath);
+					System.out.println("Trying to load image: " + imagePath);
 
 					InputStream imageStream = getClass().getResourceAsStream(imagePath);
 
 					if (imageStream != null) {
-						System.out.println("✅ Image found and loaded: " + item.getImageUrl());
+						System.out.println("Image found and loaded: " + item.getImageUrl());
 						Image image = new Image(imageStream);
 						imageView.setImage(image);
 					} else {
-						System.err.println("❌ Image NOT found for: " + item.getImageUrl());
-						System.err.println("❗ Did you copy image to target/classes? Is name correct?");
+						System.err.println("Image NOT found for: " + item.getImageUrl());
+						System.err.println("Did you copy image to target/classes? Is name correct?");
 
 						try (InputStream defaultImageStream = getClass().getResourceAsStream("/il/OCSFMediatorExample/client/Items_images/default.png")) {
 							if (defaultImageStream != null) {
 								imageView.setImage(new Image(defaultImageStream));
-								System.out.println("⚠️ Loaded default image instead.");
+								System.out.println("Loaded default image instead.");
 							} else {
-								System.err.println("⚠️ Default image not found either. Please add default.png.");
+								System.err.println("Default image not found either. Please add default.png.");
 							}
 						} catch (IOException e) {
 							e.printStackTrace();

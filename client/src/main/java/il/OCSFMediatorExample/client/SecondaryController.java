@@ -73,7 +73,7 @@ public class SecondaryController {
             System.out.println("Sending message to server: " + msg);
             SimpleClient.getClient().sendToServerSafe(msg);
 
-            // ✅ עדכון התצוגה מיידית
+
             currentItem.setPrice(newPrice); // נעדכן את האובייקט המקומי
             itemPriceLabel.setText(String.format("Price: %.2f₪", newPrice)); // נעדכן את ה־Label
 

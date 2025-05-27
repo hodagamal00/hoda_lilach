@@ -13,7 +13,7 @@ public class SimpleClient extends AbstractClient {
 
 	public static SimpleClient getClient() {
 		if (client == null) {
-			client = new SimpleClient("localhost", 3000); // ❗ שנה את הכתובת אם את עובדת ברשת
+			client = new SimpleClient("192.168.252.47", 3000);
 			try {
 				client.openConnection();
 			} catch (Exception e) {
@@ -38,9 +38,9 @@ public class SimpleClient extends AbstractClient {
 			if (strMsg.startsWith("#warning")) {
 				EventBus.getDefault().post(new WarningEvent(strMsg));
 			} else if (strMsg.startsWith("Price updated")) {
-				System.out.println("✅ SERVER: " + strMsg); // הצלחה בעדכון מחיר
+				System.out.println(" SERVER: " + strMsg); // הצלחה בעדכון מחיר
 			} else if (strMsg.startsWith("Price update failed") || strMsg.startsWith("Invalid")) {
-				System.err.println("❌ SERVER ERROR: " + strMsg);
+				System.err.println(" SERVER ERROR: " + strMsg);
 			}
 
 		} else if (msg instanceof List) {
