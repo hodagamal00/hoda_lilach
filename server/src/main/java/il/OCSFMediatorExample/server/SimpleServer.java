@@ -35,9 +35,10 @@ public class SimpleServer extends AbstractServer {
 							System.out.println("Price updated for item ID: " + itemId + " to " + newPrice);
 							client.sendToClient("Price updated successfully");
 
-							// שולח מחדש את הקטלוג המעודכן
+							// 🔁 שולח את הקטלוג החדש לכל הלקוחות
 							List<Item> updatedItems = CatalogDAO.getAllItems();
-							client.sendToClient(updatedItems);
+							broadcastToAllClients(updatedItems);
+
 						} else {
 							client.sendToClient("Price update failed");
 						}
@@ -55,6 +56,18 @@ public class SimpleServer extends AbstractServer {
 		} catch (IOException e) {
 			System.err.println("Error handling client message:");
 			e.printStackTrace();
+		}
+	}
+
+	// 🟢 שולח הודעה לכל הלקוחות המחוברים
+	private void broadcastToAllClients(Object message) {
+		for (Thread t : getClientConnections()) {
+			try {
+				ConnectionToClient c = (ConnectionToClient) t;
+				c.sendToClient(message);
+			} catch (IOException e) {
+				System.err.println("⚠️ Failed to send to client: " + e.getMessage());
+			}
 		}
 	}
 }
