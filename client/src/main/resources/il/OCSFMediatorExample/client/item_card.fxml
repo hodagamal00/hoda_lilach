@@ -8,7 +8,7 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="il.OCSFMediatorExample.client.ItemCardController"
       alignment="CENTER" spacing="8"
-      style="-fx-background-color: #c9c8cf; -fx-border-color: #f62626; -fx-border-radius: 10; -fx-background-radius: 10;"
+      style="-fx-background-color: #c9c8cf; -fx-border-color: #b494e4; -fx-border-radius: 10; -fx-background-radius: 10;"
       prefWidth="200" prefHeight="270">
 
     <VBox.margin>
@@ -16,6 +16,7 @@
     </VBox.margin>
 
     <ImageView fx:id="itemImage" fitWidth="160" fitHeight="160" preserveRatio="true"/>
-    <Label fx:id="itemName" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
-    <Label fx:id="itemPrice" style="-fx-text-fill: #060110; -fx-font-size: 13px;"/>
+    <Label fx:id="itemName" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <Label fx:id="itemPrice" style="-fx-text-fill: #060110; -fx-font-size: 14px; -fx-font-weight: bold;" />
+
 </VBox>

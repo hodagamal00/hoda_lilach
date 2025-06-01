@@ -36,28 +36,37 @@ public class SimpleServer extends AbstractServer {
 		try {
 			if ("getCatalog".equals(msg)) {
 				List<Item> items = CatalogDAO.getAllItems();
+				System.out.println("Sending catalog with " + items.size() + " items.");
 				client.sendToClient(items);
 			}
 
-			// Format: updatePrice:<id>:<newPrice>
-			else if (msg instanceof String && ((String) msg).startsWith("updatePrice:")) {
-				String[] parts = ((String) msg).split(":");
-				int id = Integer.parseInt(parts[1]);
-				double newPrice = Double.parseDouble(parts[2]);
+			else if (msg instanceof String str && str.startsWith("updatePrice:")) {
+				String[] parts = str.split(":");
+				if (parts.length == 3) {
+					try {
+						int id = Integer.parseInt(parts[1]);
+						double newPrice = Double.parseDouble(parts[2]);
 
-				boolean updated = CatalogDAO.updateItemPrice(id, newPrice);
-				if (updated) {
-					client.sendToClient("Price updated successfully for item ID " + id);
+						boolean updated = CatalogDAO.updateItemPrice(id, newPrice);
+						if (updated) {
+							System.out.println("Price updated for item ID " + id);
+							client.sendToClient("Price updated successfully for item ID " + id);
 
-					// Notify all clients with updated catalog
-					List<Item> updatedCatalog = CatalogDAO.getAllItems();
-					broadcastToSubscribers(updatedCatalog); // ✅ now declared correctly below
+							// Broadcast updated catalog
+							List<Item> updatedCatalog = CatalogDAO.getAllItems();
+							broadcastToSubscribers(updatedCatalog);
+						} else {
+							client.sendToClient("Price update failed for item ID " + id);
+						}
+					} catch (NumberFormatException e) {
+						client.sendToClient("Invalid format for updatePrice");
+					}
 				} else {
-					client.sendToClient("Price update failed for item ID " + id);
+					client.sendToClient("Invalid updatePrice command structure.");
 				}
 			}
 
-		} catch (IOException | NumberFormatException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
