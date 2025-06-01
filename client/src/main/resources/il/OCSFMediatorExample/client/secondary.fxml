@@ -19,14 +19,11 @@
     <Label fx:id="itemPriceLabel" text="Price:"/>
     <Label fx:id="itemDescriptionLabel" text="Description:"/>
 
-    <!-- שדה להזנת מחיר חדש -->
     <TextField fx:id="newPriceField" promptText="Enter new price"/>
 
-    <!-- כפתור לעדכון מחיר -->
-    <Button fx:id="updatePriceButton" text="Update Price" onAction="#handleUpdatePriceAction"/>
+    <Button fx:id="updatePriceButton" text="Update Price" onAction="#onUpdatePriceClicked"/>
 
-    <!-- כפתור חזרה לקטלוג -->
-    <Button fx:id="backButton" onAction="#handleBackButtonAction" text="Back to Catalog">
+    <Button fx:id="backButton" text="Back to Catalog" onAction="#onBackToCatalogClicked">
         <VBox.margin><Insets top="20.0"/></VBox.margin>
     </Button>
 </VBox>

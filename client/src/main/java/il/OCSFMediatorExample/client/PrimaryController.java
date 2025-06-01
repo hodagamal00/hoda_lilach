@@ -4,6 +4,7 @@ import il.OCSFMediatorExample.entities.Item;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -17,8 +18,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 public class PrimaryController {
@@ -29,7 +30,7 @@ public class PrimaryController {
 	@FXML
 	public void initialize() {
 		EventBus.getDefault().register(this);
-		SimpleClient.getClient().sendToServerSafe("getCatalog");
+		SimpleClient.sendToServerSafe("getCatalog");
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
@@ -40,79 +41,55 @@ public class PrimaryController {
 			int row = 0;
 
 			for (Item item : items) {
-				try {
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("/il/OCSFMediatorExample/client/item_card.fxml"));
-					VBox card = loader.load();
+				VBox box = createItemBox(item);
+				gridPane.add(box, column, row);
 
-					ImageView imageView = (ImageView) card.lookup("#itemImage");
-					Text name = (Text) card.lookup("#itemName");
-					Text price = (Text) card.lookup("#itemPrice");
-
-					// טעינת התמונה של הפריט - גרסה מעודכנת עם הדפסות DEBUG
-					String imagePath = "/il/OCSFMediatorExample/client/Items_images/" + item.getImageUrl();
-					System.out.println("🔍 Trying to load image: " + imagePath);
-
-					InputStream imageStream = getClass().getResourceAsStream(imagePath);
-
-					if (imageStream != null) {
-						System.out.println("✅ Image found and loaded: " + item.getImageUrl());
-						Image image = new Image(imageStream);
-						imageView.setImage(image);
-					} else {
-						System.err.println("❌ Image NOT found for: " + item.getImageUrl());
-						System.err.println("❗ Did you copy image to target/classes? Is name correct?");
-
-						try (InputStream defaultImageStream = getClass().getResourceAsStream("/il/OCSFMediatorExample/client/Items_images/default.png")) {
-							if (defaultImageStream != null) {
-								imageView.setImage(new Image(defaultImageStream));
-								System.out.println("⚠️ Loaded default image instead.");
-							} else {
-								System.err.println("⚠️ Default image not found either. Please add default.png.");
-							}
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-
-					name.setText(item.getName());
-					price.setText(String.format("Price: %.2f₪", item.getPrice()));
-
-					card.setOnMouseClicked(event -> {
-						try {
-							showItemDetails(item);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					});
-
-					gridPane.add(card, column, row);
-					column++;
-					if (column == 3) {
-						column = 0;
-						row++;
-					}
-
-				} catch (Exception e) {
-					System.err.println("Error loading item card for item: " + item.getName() + ": " + e.getMessage());
-					e.printStackTrace();
+				column++;
+				if (column == 2) {
+					column = 0;
+					row++;
 				}
 			}
 		});
 	}
 
-	private void showItemDetails(Item item) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/il/OCSFMediatorExample/client/secondary.fxml"));
-		Parent root = loader.load();
-		SecondaryController secondaryController = loader.getController();
-		secondaryController.setItem(item);
+	private VBox createItemBox(Item item) {
+		VBox vbox = new VBox();
+		vbox.setSpacing(5);
 
-		Stage stage = new Stage();
-		stage.setScene(new Scene(root));
-		stage.setTitle("Item Details: " + item.getName());
-		stage.show();
+		ImageView imageView = new ImageView();
+		imageView.setFitWidth(150);
+		imageView.setFitHeight(150);
+		imageView.setPreserveRatio(true);
+
+		if (item.getImageData() != null) {
+			ByteArrayInputStream bis = new ByteArrayInputStream(item.getImageData());
+			imageView.setImage(new Image(bis));
+		}
+
+		Text name = new Text(item.getName());
+		Text price = new Text(String.format("₪ %.2f", item.getPrice()));
+
+		vbox.getChildren().addAll(imageView, name, price);
+
+		// Optional: make the box clickable
+		vbox.setOnMouseClicked(e -> showItemDetails(item));
+
+		return vbox;
 	}
 
-	public void onClose() {
-		EventBus.getDefault().unregister(this);
+	private void showItemDetails(Item item) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/il/OCSFMediatorExample/client/secondary.fxml"));
+			Parent root = loader.load();
+
+			SecondaryController controller = loader.getController();
+			controller.setItem(item);
+
+			Stage stage = (Stage) gridPane.getScene().getWindow();
+			stage.setScene(new Scene(root));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

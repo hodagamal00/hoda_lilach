@@ -10,11 +10,11 @@ public class CatalogDAO {
 
     public static List<Item> getAllItems() {
         List<Item> catalog = new ArrayList<>();
-        String query = "SELECT id, name, category, price, description, image_url FROM catalog"; // מפרט את העמודות
+        String query = "SELECT id, name, category, price, description, image_data FROM catalog";
 
         try (
                 Connection conn = DBConnector.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(query); // עדיף PreparedStatement
+                PreparedStatement pstmt = conn.prepareStatement(query);
                 ResultSet rs = pstmt.executeQuery()
         ) {
             while (rs.next()) {
@@ -24,14 +24,14 @@ public class CatalogDAO {
                         rs.getString("category"),
                         rs.getDouble("price"),
                         rs.getString("description"),
-                        rs.getString("image_url")
+                        rs.getBytes("image_data")
                 ));
-
             }
         } catch (SQLException e) {
             System.err.println("Database error fetching all items: " + e.getMessage());
             e.printStackTrace();
         }
+
         return catalog;
     }
 
