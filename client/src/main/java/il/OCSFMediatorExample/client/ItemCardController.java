@@ -14,20 +14,13 @@ public class ItemCardController {
     @FXML private Label itemName;
     @FXML private Label itemPrice;
 
-    private Item item;
-
-    public void setItem(Item item) {
-        this.item = item;
+    public void setData(Item item) {
         itemName.setText(item.getName());
         itemPrice.setText(String.format("₪ %.2f", item.getPrice()));
 
         if (item.getImageData() != null) {
-            ByteArrayInputStream bis = new ByteArrayInputStream(item.getImageData());
-            itemImage.setImage(new Image(bis));
+            Image image = new Image(new ByteArrayInputStream(item.getImageData()));
+            itemImage.setImage(image);
         }
-    }
-
-    public Item getItem() {
-        return item;
     }
 }
