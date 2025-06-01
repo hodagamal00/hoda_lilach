@@ -4,21 +4,16 @@ import il.OCSFMediatorExample.entities.Item;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,55 +22,57 @@ public class PrimaryController {
 	@FXML private GridPane gridPane;
 	@FXML private ScrollPane scrollPane;
 
+	private List<Item> currentItems;
+
 	@FXML
 	public void initialize() {
 		EventBus.getDefault().register(this);
 		SimpleClient.sendToServerSafe("getCatalog");
+
+		// إعادة ترتيب الكروت عند تغيير حجم النافذة
+		scrollPane.widthProperty().addListener((obs, oldVal, newVal) -> {
+			if (currentItems != null) {
+				renderCatalog(currentItems);
+			}
+		});
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void onCatalogReceived(List<Item> items) {
 		Platform.runLater(() -> {
-			gridPane.getChildren().clear();
-			int column = 0;
-			int row = 0;
-
-			for (Item item : items) {
-				VBox box = createItemBox(item);
-				gridPane.add(box, column, row);
-
-				column++;
-				if (column == 2) {
-					column = 0;
-					row++;
-				}
-			}
+			currentItems = items;
+			renderCatalog(items);
 		});
 	}
 
-	private VBox createItemBox(Item item) {
-		VBox vbox = new VBox();
-		vbox.setSpacing(5);
+	private void renderCatalog(List<Item> items) {
+		gridPane.getChildren().clear();
+		int column = 0;
+		int row = 0;
 
-		ImageView imageView = new ImageView();
-		imageView.setFitWidth(150);
-		imageView.setFitHeight(150);
-		imageView.setPreserveRatio(true);
+		double cardWidth = 250; // تقريبي: عرض البطاقة + مسافات
+		int cardsPerRow = Math.max(1, (int) (scrollPane.getWidth() / cardWidth));
 
-		if (item.getImageData() != null) {
-			ByteArrayInputStream bis = new ByteArrayInputStream(item.getImageData());
-			imageView.setImage(new Image(bis));
+		for (Item item : items) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/il/OCSFMediatorExample/client/item_card.fxml"));
+				VBox card = loader.load();
+
+				ItemCardController controller = loader.getController();
+				controller.setItem(item);
+
+				card.setOnMouseClicked(e -> showItemDetails(item));
+
+				gridPane.add(card, column, row);
+				column++;
+				if (column >= cardsPerRow) {
+					column = 0;
+					row++;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
-		Text name = new Text(item.getName());
-		Text price = new Text(String.format("₪ %.2f", item.getPrice()));
-
-		vbox.getChildren().addAll(imageView, name, price);
-
-		// Optional: make the box clickable
-		vbox.setOnMouseClicked(e -> showItemDetails(item));
-
-		return vbox;
 	}
 
 	private void showItemDetails(Item item) {
