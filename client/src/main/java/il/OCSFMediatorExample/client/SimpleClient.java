@@ -1,61 +1,52 @@
 package il.OCSFMediatorExample.client;
 
-import il.OCSFMediatorExample.client.ocsf.AbstractClient;
+import il.OCSFMediatorExample.client.ocsf.ObservableClient;
 import il.OCSFMediatorExample.entities.Item;
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class SimpleClient extends AbstractClient {
+public class SimpleClient {
 
-	private static SimpleClient client;
+	private static ObservableClient client;
 
-	public static SimpleClient getClient() {
+	public static ObservableClient getClient() {
 		if (client == null) {
-			client = new SimpleClient("localhost", 3000);
+			client = new ObservableClient("localhost", 3000);
+
+			client.addObserver(new Observer() {
+				@Override
+				public void update(Observable o, Object msg) {
+					if (msg instanceof List<?>) {
+						List<?> list = (List<?>) msg;
+						if (!list.isEmpty() && list.get(0) instanceof Item) {
+							@SuppressWarnings("unchecked")
+							List<Item> items = (List<Item>) list;
+							EventBus.getDefault().post(items);
+						}
+					} else if (msg instanceof String) {
+						String strMsg = (String) msg;
+						System.out.println("SERVER: " + strMsg);
+					}
+				}
+			});
+
 			try {
 				client.openConnection();
 			} catch (Exception e) {
-				System.err.println("CLIENT: Failed to connect to server.");
 				e.printStackTrace();
 			}
 		}
 		return client;
 	}
 
-	public SimpleClient(String host, int port) {
-		super(host, port);
-	}
-
-	@Override
-	protected void handleMessageFromServer(Object msg) {
-		System.out.println("CLIENT: Message received from server: " + msg.toString());
-
-		if (msg instanceof String) {
-			String strMsg = (String) msg;
-			if (strMsg.startsWith("#warning")) {
-				EventBus.getDefault().post(new WarningEvent(strMsg));
-			}
-		} else if (msg instanceof List) {
-			List<?> list = (List<?>) msg;
-			if (!list.isEmpty() && list.get(0) instanceof Item) {
-				@SuppressWarnings("unchecked")
-				List<Item> items = (List<Item>) list;
-				EventBus.getDefault().post(items);
-			}
-		}
-	}
-
-	public void sendToServerSafe(Object msg) {
+	public static void sendToServerSafe(Object msg) {
 		try {
-			if (isConnected()) {
-				sendToServer(msg);
-			} else {
-				System.err.println("CLIENT: Not connected to server. Cannot send message.");
-			}
-		} catch (IOException e) {
-			System.err.println("CLIENT: Failed to send message to server: " + e.getMessage());
+			getClient().sendToServer(msg);
+		} catch (Exception e) {
+			System.err.println("Failed to send message to server: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}

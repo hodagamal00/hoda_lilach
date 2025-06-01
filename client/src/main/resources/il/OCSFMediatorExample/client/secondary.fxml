@@ -19,7 +19,11 @@
     <Label fx:id="itemPriceLabel" text="Price:"/>
     <Label fx:id="itemDescriptionLabel" text="Description:"/>
 
-    <Button fx:id="backButton" onAction="#handleBackButtonAction" text="Back to Catalog">
+    <TextField fx:id="newPriceField" promptText="Enter new price"/>
+
+    <Button fx:id="updatePriceButton" text="Update Price" onAction="#onUpdatePriceClicked"/>
+
+    <Button fx:id="backButton" text="Back to Catalog" onAction="#onBackToCatalogClicked">
         <VBox.margin><Insets top="20.0"/></VBox.margin>
     </Button>
 </VBox>
