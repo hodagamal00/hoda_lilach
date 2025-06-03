@@ -14,8 +14,8 @@ public class SimpleClient {
 
 	public static ObservableClient getClient() {
 		if (client == null) {
-			//client = new ObservableClient("localhost", 3000);
-			client = new ObservableClient("7.tcp.eu.ngrok.io", 19057);
+			client = new ObservableClient("localhost", 3000);
+
 
 
 			client.addObserver(new Observer() {
