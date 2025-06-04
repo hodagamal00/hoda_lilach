@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="hoda lilach:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/hoda_lilach_jar</output-path>
+    <root id="archive" name="hoda lilach.jar">
+      <element id="module-output" name="entities" />
+      <element id="module-output" name="client" />
+      <element id="module-output" name="server" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/21.0.1/javafx-fxml-21.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/21.0.1/javafx-graphics-21.0.1-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/il/cshaifasweng/OCSFMediatorExample/entities/0.0.1-SNAPSHOT/entities-0.0.1-SNAPSHOT.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.21.9/protobuf-java-3.21.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/21.0.1/javafx-graphics-21.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/greenrobot/eventbus/3.2.0/eventbus-3.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/21.0.1/javafx-fxml-21.0.1-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/21.0.1/javafx-controls-21.0.1-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/21.0.1/javafx-controls-21.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
