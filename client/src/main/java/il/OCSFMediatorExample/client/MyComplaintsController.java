@@ -1,4 +1,4 @@
-package il.OCSFMediatorExample.client;
+package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.Account;
 import il.cshaifasweng.OCSFMediatorExample.entities.Complaint;

@@ -1,4 +1,4 @@
-package il.OCSFMediatorExample.client;
+package il.cshaifasweng.OCSFMediatorExample.client;
 
 
 import java.awt.*;

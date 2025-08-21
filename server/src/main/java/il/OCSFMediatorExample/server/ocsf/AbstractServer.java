@@ -2,9 +2,11 @@
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com
 
-package il.OCSFMediatorExample.server.ocsf;
+package il.cshaifasweng.OCSFMediatorExample.server.ocsf;
 
 import java.net.*;
+import java.sql.SQLException;
+import java.util.*;
 import java.io.*;
 
 /**
@@ -529,7 +531,7 @@ public abstract class AbstractServer implements Runnable
    *  sent the message.
    */
   protected abstract void handleMessageFromClient(
-    Object msg, ConnectionToClient client);
+    Object msg, ConnectionToClient client) throws IOException, SQLException;
 
 
 // METHODS TO BE USED FROM WITHIN THE FRAMEWORK ONLY ----------------
@@ -547,8 +549,7 @@ public abstract class AbstractServer implements Runnable
    *  sent the message.
    */
   final synchronized void receiveMessageFromClient(
-    Object msg, ConnectionToClient client)
-  {
+    Object msg, ConnectionToClient client) throws IOException, SQLException {
     this.handleMessageFromClient(msg, client);
   }
 }

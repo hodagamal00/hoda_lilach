@@ -2,7 +2,7 @@
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com
 
-package il.OCSFMediatorExample.server.ocsf;
+package il.cshaifasweng.OCSFMediatorExample.server.ocsf;
 
 /**
 * The <code> ObservableOriginatorServer </code> is a subclass

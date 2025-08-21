@@ -2,7 +2,11 @@
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com
 
-package il.OCSFMediatorExample.server.ocsf;
+package il.cshaifasweng.OCSFMediatorExample.server.ocsf;
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 /**
 * The <code> AdaptableServer </code> is an adapter class

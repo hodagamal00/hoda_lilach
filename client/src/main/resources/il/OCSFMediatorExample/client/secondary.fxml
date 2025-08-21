@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="il.OCSFMediatorExample.client.SecondaryController"
-      alignment="TOP_LEFT" spacing="10.0" prefWidth="400.0">
-    <padding><Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/></padding>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="594.0" stylesheets="@mycsss.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.SecondaryController">
+    <children>
+        <ImageView fx:id="flower_image" fitHeight="315.0" fitWidth="223.0" layoutX="46.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
 
-    <Label text="Item Details"><font><Font name="System Bold" size="18.0"/></font></Label>
-
-    <ImageView fx:id="itemDetailImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"/>
-    <Label fx:id="itemNameLabel" text="Name:"/>
-    <Label fx:id="itemIdLabel" text="ID:"/>
-    <Label fx:id="itemTypeLabel" text="Category:"/>
-    <Label fx:id="itemPriceLabel" text="Price:"/>
-    <Label fx:id="itemDescriptionLabel" text="Description:"/>
-
-    <TextField fx:id="newPriceField" promptText="Enter new price"/>
-
-    <Button fx:id="updatePriceButton" text="Update Price" onAction="#onUpdatePriceClicked"/>
-
-    <Button fx:id="backButton" text="Back to Catalog" onAction="#onBackToCatalogClicked">
-        <VBox.margin><Insets top="20.0"/></VBox.margin>
-    </Button>
-</VBox>
+        </ImageView>
+        <DialogPane fx:id="flower_name" contentText="flower 1" layoutX="278.0" layoutY="70.0" prefHeight="57.0" prefWidth="73.0" />
+        <Button fx:id="edit_product" layoutX="507.0" layoutY="24.0" mnemonicParsing="false" onAction="#edit_product" text="Edit" />
+        <Button fx:id="back_button" layoutX="16.0" layoutY="25.0" mnemonicParsing="false" onAction="#returnWindow" prefHeight="26.0" prefWidth="59.0" text="back" />
+      <AnchorPane id="es" layoutX="134.0" layoutY="50.0" prefHeight="431.0" prefWidth="313.0" stylesheets="@mycsss.css">
+         <children>
+              <TextField fx:id="setName" layoutX="80.0" layoutY="14.0" promptText="Name" />
+              <TextField fx:id="setPrice" layoutX="80.0" layoutY="52.0" promptText="Price" />
+              <TextArea fx:id="setDetails" layoutX="19.0" layoutY="88.0" prefHeight="277.0" prefWidth="275.0" promptText="Details.." />
+            <Button fx:id="apply_changes" layoutX="107.0" layoutY="384.0" mnemonicParsing="false" onAction="#updateProduct" text="Apply Changes" />
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>

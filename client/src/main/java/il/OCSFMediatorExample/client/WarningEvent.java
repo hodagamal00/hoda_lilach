@@ -1,17 +1,14 @@
-package il.OCSFMediatorExample.client;
+package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.Warning;
 public class WarningEvent {
-	private String warning;
+	private Warning warning;
 
-	public WarningEvent(String warning) {
-		this.warning = warning;
-	}
-
-	public String getWarning() {
+	public Warning getWarning() {
 		return warning;
 	}
 
-	public void setWarning(String warning) {
+	public WarningEvent(Warning warning) {
 		this.warning = warning;
 	}
 }

@@ -2,7 +2,7 @@
  * Sample Skeleton for 'replycomplaint.fxml' Controller Class
  */
 
-package il.OCSFMediatorExample.client;
+package il.cshaifasweng.OCSFMediatorExample.client;
 
 import java.io.IOException;
 import java.net.URL;

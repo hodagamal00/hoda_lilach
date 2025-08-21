@@ -1,4 +1,4 @@
-package il.OCSFMediatorExample.server.ocsf;
+package il.cshaifasweng.OCSFMediatorExample.server.ocsf;
 import il.cshaifasweng.OCSFMediatorExample.server.SimpleServer;
 import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import java.util.ArrayList;
